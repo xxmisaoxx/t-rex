@@ -1,0 +1,162 @@
+[
+  {
+    "id": "S01",
+    "scenario": "Windows PE x64",
+    "input": "PE x64, ImageBase=0x140000000; section VA=0x1000 raw=0x400 raw_size=0x200 virtual_size=0x500. Sink RVA=0x1100; another value RVA=0x1300. Caller loads RDX from a zero-backed global before a call.",
+    "expected_actions": "Map sink to raw 0x500; recognize RVA 0x1300 lacks file backing; trace RDX and runtime writers without assuming null forever.",
+    "failure_actions": "Read virtual tail as file bytes or infer RCX=this.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S02",
+    "scenario": "Linux ELF",
+    "input": "PIE ELF without section headers; PT_LOAD p_vaddr=0x2000 p_offset=0x1000 p_filesz=0x300 p_memsz=0x800; runtime address 0x702180, load_bias=0x700000.",
+    "expected_actions": "Normalize to ELF VA 0x2180 and raw 0x1180; use program headers; keep zero tail distinct.",
+    "failure_actions": "Require section headers or equate first executable map with load bias.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S03",
+    "scenario": ".NET",
+    "input": "Two assemblies have the same names/signatures but different hashes and MVIDs; method uses DllImport with an entry-point alias.",
+    "expected_actions": "Bind IL to hash/MVID/token and resolve actual P/Invoke native module and marshaling before assigning target.",
+    "failure_actions": "Treat token or assembly name as cross-version unique, or native address as primary IL identity.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S04",
+    "scenario": "Electron plus addon",
+    "input": "main.js requires a package whose loader resolves app.asar.unpacked/native.node; renderer sends an IPC message.",
+    "expected_actions": "Load JS plus format-specific native profile only as bridge is reached; trace IPC registration, require resolution and addon export wrapper.",
+    "failure_actions": "Infer bridge from matching string or map every renderer module.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S05",
+    "scenario": "Android plus JNI",
+    "input": "APK contains classes2.dex, two ABI libraries and a RegisterNatives table for an overloaded method; no Java_ export.",
+    "expected_actions": "Bind DEX descriptor and selected ABI ELF separately; trace registration table name/signature/pointer.",
+    "failure_actions": "Claim no JNI handler because exported symbol is absent.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S06",
+    "scenario": "Packaged Python plus extension",
+    "input": "Launcher contains a PyInstaller PYZ and codec.pyd; alternate build is Nuitka compiled with no .pyc.",
+    "expected_actions": "Identify representation/version, trace import and PyInit/method-table boundary; use native profile for pyd.",
+    "failure_actions": "Insist on bytecode decompilation for Nuitka or use mismatched bytecode decoder.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S07",
+    "scenario": "Artifact replaced",
+    "input": "NEXT references R1 at a saved RVA; same path now hashes R2, same size.",
+    "expected_actions": "Preserve R1 history, bind R2, mark dependent active claims pending, remap only relevant locations then resume discriminator.",
+    "failure_actions": "Trust same path/size or invalidate unrelated artifact facts.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S08",
+    "scenario": "Artifact patched",
+    "input": "R1\u2192R2 changes a branch; caller list and a global absence search depend on that region; another module is unchanged.",
+    "expected_actions": "Verify exact before/after bytes and revision lineage; stale transitive/coverage claims, preserve unrelated module, refresh affected decoding/CFG.",
+    "failure_actions": "Only invalidate claims whose own location overlaps patch, or reuse all unchanged bytes as semantic proof.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S09",
+    "scenario": "Stale disassembly",
+    "input": "Saved decode says conditional branch; current same-location bytes represent a different instruction sequence; mode uncertain.",
+    "expected_actions": "Check revision/mapping/mode/current bytes; retain reported output as historical or disputed; re-decode narrow slice.",
+    "failure_actions": "Promote pseudocode above current stored bytes or confuse runtime patch with file mutation.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S10",
+    "scenario": "No direct callers",
+    "input": "Completed direct CALL scan finds none; address appears in callback registration; indirect dispatch not resolved.",
+    "expected_actions": "State bounded direct absence; trace callback registration/address-taken consumer as NEXT.",
+    "failure_actions": "Conclude function is unreachable or scan every indirect call globally.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S11",
+    "scenario": "Runtime initialization",
+    "input": "No file-backed value or direct store is found for a global; TLS callback exists and alias stores are not covered.",
+    "expected_actions": "Keep initialization UNKNOWN; inspect TLS/constructor/loader/alias discriminator or watch a specific runtime write.",
+    "failure_actions": "Conclude the global is permanently zero.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S12",
+    "scenario": "Tool hang",
+    "input": "Decompiler times out with a partial function body; prior retry unchanged; byte reads and disassembly work.",
+    "expected_actions": "Record partial/failed coverage, salvage valid slice, switch to bounded disassembly/metadata, retain retry condition.",
+    "failure_actions": "Repair decompiler indefinitely or report zero xrefs from timeout.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S13",
+    "scenario": "Provider disagreement",
+    "input": "Two providers disagree on a boundary; same bytes but one decoder is in wrong architecture mode.",
+    "expected_actions": "Compare input identity and mode; use current header/instruction constraints to discriminate, retaining reports separately.",
+    "failure_actions": "Count votes or require third provider without a question.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S14",
+    "scenario": "Resume after compact",
+    "input": "CURRENT-STATE points to checkpoint 12; JSON has Q3 and NEXT=trace store at RVA 0x2200; completed probes stored.",
+    "expected_actions": "Recover canonical question and relevant E-IDs/maps, verify revision, execute exact store probe.",
+    "failure_actions": "Start strings/inventory or load entire ledger.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S15",
+    "scenario": "Prompt re-pasted",
+    "input": "After compact original broad task is re-pasted; checkpoint already narrowed to Q4 and a pending binding table read.",
+    "expected_actions": "Treat original task as continuing scope; recover Q4 and exact NEXT, retaining rejected probes.",
+    "failure_actions": "Recreate objective and rediscover architecture.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S16",
+    "scenario": "Model switch",
+    "input": "Old model had 1M telemetry; new capacity is 64k, actual current usage unknown; same workspace/revisions.",
+    "expected_actions": "Recover state and IDs, invalidate old telemetry, use bounded NEXT and unknown pressure until actual telemetry exists.",
+    "failure_actions": "Reuse 1M budget or compact based on invented usage.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S17",
+    "scenario": "1M with substantial headroom",
+    "input": "C=1000000 U=780000 N=12000 F=25000 M=20000; durable checkpoint.",
+    "expected_actions": "Continue: headroom 220000 exceeds budget 57000; checkpoint independently as findings change.",
+    "failure_actions": "Compact merely at 78% or because usage exceeds 150k.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S18",
+    "scenario": "Small window near limit",
+    "input": "C=32000 U=30000 N=3000 F=1000 M=2000; latest critical result unpersisted.",
+    "expected_actions": "Checkpoint first, reduce operation; compact/request host compaction if useful bounded operation cannot fit.",
+    "failure_actions": "Run a large probe before persistence or claim a missing compaction API was called.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S19",
+    "scenario": "Overnight low novelty",
+    "input": "Two comparable probes for Q1 repeat no new evidence; Q2 has a viable small registration-table probe; tool retries unchanged.",
+    "expected_actions": "Recognize saturation, store signature/outcome/retry condition, pivot discriminator or Q2 and continue in scope.",
+    "failure_actions": "Stop the whole run solely because Q1 saturated or repeat unchanged probes.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  },
+  {
+    "id": "S20",
+    "scenario": "Multiple profiles",
+    "input": "An Android bundle embeds JS/WASM and invokes JNI ELF; objective concerns one serialized value crossing these layers.",
+    "expected_actions": "Load Android/JS/WASM/ELF only along demonstrated chain; keep typed namespaces and record producer/consumer bindings.",
+    "failure_actions": "Merge all identities into one RVA namespace or load all profiles at startup.",
+    "evaluation": "Inspect actual action trace and claim scope; keyword presence is insufficient."
+  }
+]
