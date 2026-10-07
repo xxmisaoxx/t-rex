@@ -1,0 +1,113 @@
+{
+  "release_version": "3.1",
+  "schema_version": "3.0",
+  "date": "2026-10-07",
+  "state_tests": {
+    "passed": 39,
+    "failed": 0
+  },
+  "host_tests": {
+    "passed": 20,
+    "failed": 0,
+    "project_user_layouts_exercised": 17
+  },
+  "fresh_agent_cases": [
+    {
+      "case": "continue",
+      "level": "fresh-agent source/state continuation with simulated destination capabilities",
+      "checkpoint_revision": 10,
+      "active_artifact_ids": [
+        "R1"
+      ],
+      "expected_sink_integer": 35,
+      "checks": {
+        "schema_graph_and_active_bytes": true,
+        "question_answered": true,
+        "next_null": true,
+        "old_telemetry_cleared": true,
+        "original_evidence_preserved": true,
+        "original_probe_preserved": true,
+        "answer_supported": true,
+        "payloads_present": true,
+        "no_spurious_revision": true,
+        "independent_runtime_oracle": true
+      },
+      "passed": true,
+      "oracle": {
+        "status": "pass",
+        "compiler": "/usr/bin/cc",
+        "observed_sink_integer": "35",
+        "scope": "Independent C harness oracle executed after agent work; agents investigated source, not binaries."
+      }
+    },
+    {
+      "case": "drift",
+      "level": "fresh-agent source/state continuation with simulated destination capabilities",
+      "checkpoint_revision": 9,
+      "active_artifact_ids": [
+        "R2"
+      ],
+      "expected_sink_integer": 44,
+      "checks": {
+        "schema_graph_and_active_bytes": true,
+        "question_answered": true,
+        "next_null": true,
+        "old_telemetry_cleared": true,
+        "original_evidence_preserved": true,
+        "original_probe_preserved": true,
+        "answer_supported": true,
+        "payloads_present": true,
+        "old_revision_historical": true,
+        "independent_runtime_oracle": true
+      },
+      "passed": true,
+      "oracle": {
+        "status": "pass",
+        "compiler": "/usr/bin/cc",
+        "observed_sink_integer": "44",
+        "scope": "Independent C harness oracle executed after agent work; agents investigated source, not binaries."
+      }
+    },
+    {
+      "case": "fallback",
+      "level": "fresh-agent source/state continuation with simulated destination capabilities",
+      "checkpoint_revision": 10,
+      "active_artifact_ids": [
+        "R1"
+      ],
+      "expected_sink_integer": 50,
+      "checks": {
+        "schema_graph_and_active_bytes": true,
+        "question_answered": true,
+        "next_null": true,
+        "old_telemetry_cleared": true,
+        "original_evidence_preserved": true,
+        "original_probe_preserved": true,
+        "answer_supported": true,
+        "payloads_present": true,
+        "no_spurious_revision": true,
+        "new_probe_uses_source": true,
+        "independent_runtime_oracle": true
+      },
+      "passed": true,
+      "oracle": {
+        "status": "pass",
+        "compiler": "/usr/bin/cc",
+        "observed_sink_integer": "50",
+        "scope": "Independent C harness oracle executed after agent work; agents investigated source, not binaries."
+      }
+    }
+  ],
+  "installed_host_runs": {
+    "status": "not-run",
+    "reason": "No named host CLI is installed in this execution environment; simulated capability descriptions are not product runs."
+  },
+  "unverified": [
+    "native skill discovery/invocation on each installed product",
+    "host automatic compaction and native session restore",
+    "remote/cloud scope",
+    "real binary RE accuracy and mixed-runtime coverage",
+    "Windows/macOS runtime behavior",
+    "long-run performance and token/cost savings"
+  ]
+}
