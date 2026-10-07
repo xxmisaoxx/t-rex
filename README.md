@@ -4,65 +4,81 @@
 
 *Follow the evidence. Uncover the logic.*
 
+[![Skill version](https://img.shields.io/badge/skill-v3.1-9bc53d)](skills/reverse-engineering-investigator/CHANGELOG.md)
+[![Validate skill](https://github.com/xxmisaoxx/t-rex/actions/workflows/validate.yml/badge.svg)](https://github.com/xxmisaoxx/t-rex/actions/workflows/validate.yml)
+[![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-blue)](LICENSE)
+
+[Install](#quick-start) · [Try an example](examples/retry-policy/README.md) · [Getting started](docs/getting-started.md) · [Validation](skills/reverse-engineering-investigator/VALIDATION-RESULTS.md)
+
 T-REX is a reverse-engineering skill for OpenCode, Claude Code, Codex, Cursor, Antigravity, Pi, and other coding agents. It helps agents trace values and callers, investigate initialization, follow connections between native and managed code, and compare software builds using the analysis tools available in your environment.
 
 Its focus is keeping an investigation usable across long sessions. Findings retain their supporting evidence, artifact revisions, and unresolved questions. Checkpoints record the exact next step so another session or agent can continue. Adaptive context handling, dependency checks, and tool-failure recovery help the agent avoid repeated work and identify conclusions that need revalidation.
 
-## Install from this repository
+## Quick start
 
-Copy the complete `skills/reverse-engineering-investigator` directory into your host's documented skill directory. Keep its directory name and relative resource tree. Choose one visible installation per host.
+Run this from your project directory with Node.js, npm and Git available:
 
-| Host | Project destination |
+```sh
+npx skills add xxmisaoxx/t-rex --skill reverse-engineering-investigator
+```
+
+The [Skills CLI](https://github.com/vercel-labs/skills) installs the complete skill for supported agents. Choose your agents when prompted. For Claude Code specifically:
+
+```sh
+npx skills add xxmisaoxx/t-rex --skill reverse-engineering-investigator --agent claude-code
+```
+
+Then ask your agent:
+
+```text
+Use the reverse-engineering-investigator skill to investigate <target path>.
+Find where <value or behavior> comes from. Show the evidence and unresolved
+questions, and save a checkpoint with the exact next step.
+```
+
+T-REX is the project name; `reverse-engineering-investigator` is the installed skill name. If your host does not discover it, explicitly ask the agent to read its installed `SKILL.md`.
+
+Prefer manual installation? Copy the complete [skill directory](skills/reverse-engineering-investigator) into your host's skill folder. [Installation paths and troubleshooting](docs/getting-started.md) cover OpenCode, Claude Code, Codex, Cursor, Antigravity and Pi. Python is optional unless you use the helper scripts.
+
+## Try it on a small target
+
+The [retry-policy example](examples/retry-policy/README.md) gives you a short C program, two prompts for starting and resuming an investigation, and an answer you can check. You can inspect the source directly; a compiler is optional.
+
+For your own targets, start with one question:
+
+- Trace a configuration value back to its writers and initialization.
+- Find the dispatch or registration path behind an indirect call.
+- Follow an Electron IPC handler into a native addon, or a managed call into native code.
+- Compare two builds and identify which earlier findings need revalidation.
+
+## What you get
+
+| When an investigation gets difficult | How T-REX helps |
 | --- | --- |
-| OpenCode | `.opencode/skills/reverse-engineering-investigator/` |
-| Claude Code | `.claude/skills/reverse-engineering-investigator/` |
-| Codex | `.agents/skills/reverse-engineering-investigator/` |
-| Cursor | `.cursor/skills/reverse-engineering-investigator/` |
-| Antigravity IDE / CLI | `.agents/skills/reverse-engineering-investigator/` |
-| Pi | `.agents/skills/reverse-engineering-investigator/` |
+| A session compacts or you change agents | Recover the active question, evidence and exact next operation from saved state. |
+| A tool report looks convincing but incomplete | Record observation, deduction and interpretation separately, with coverage and limitations. |
+| A target is rebuilt or replaced | Bind findings to artifact revisions and revalidate affected conclusions. |
+| A provider hangs or reports conflicting results | Preserve partial results and choose a smaller probe that can resolve the uncertainty. |
+| Context is running out | Estimate the next operation against actual remaining headroom and checkpoint when needed. |
 
-For shared-layout hosts, one `.agents/skills` copy can serve several compatible agents. For another host without native discovery, explicitly read SKILL.md through its instruction mechanism. The repository's `skills/` directory is a distribution location; cloning it alone does not install it in every host.
+Profiles cover PE, ELF, Mach-O, generic native code, .NET, JVM, JavaScript/Electron, packaged Python, Android, iOS and WebAssembly. They guide the agent's reasoning; your environment supplies the analysis tools.
 
-For personal paths, invocation commands, scope caveats and official sources, read the [skill README](skills/reverse-engineering-investigator/README.md) and [host registry](skills/reverse-engineering-investigator/hosts/registry.json).
+The workflow uses the agent's available tools and can work alongside MCP-based analysis systems. The [architecture notes](skills/reverse-engineering-investigator/V3-ARCHITECTURE.md) explain state ownership and evidence dependencies.
 
-Optional staging exporter (Python 3.10+, no third-party dependencies), run from this repository root:
+## Tested scope
 
-```sh
-python skills/reverse-engineering-investigator/scripts/export_host.py --host claude-code --out ../export-claude
-python skills/reverse-engineering-investigator/scripts/export_host.py --host shared --out ../export-shared
-```
+Release 3.1 passed 39 state tests, 20 portability tests covering 17 host/scope layouts, and three fresh-agent source/state continuation cases. [Read the results and remaining gaps](skills/reverse-engineering-investigator/VALIDATION-RESULTS.md).
 
-The output contains the host-specific directory tree and an optional loader fragment. Copy the skill tree into your actual project/home root. The exporter verifies the source manifest and refuses existing output directories; it does not edit host settings or project policies.
+These checks cover state mechanics and the tested packaging/continuation cases. Actual discovery, compaction and native session lifecycle on every named host, real binary coverage and multi-hour stability still need evaluation.
 
-## Continue an investigation
+## Help improve T-REX
 
-Keep project facts in an investigation workspace, outside this source repository and the installed skill. Recover canonical INVESTIGATION.json and relevant evidence/NEXT before new discovery. On a host/model/session switch, verify relevant artifact identity, clear stale context measurements and continue with the destination's actual tools. No fixed context limit, mandatory MCP, subagents or Python runtime is imposed on the methodology.
+[Report a problem](https://github.com/xxmisaoxx/t-rex/issues/new/choose), share a reproducible investigation, or contribute a host fix. [Contributing](CONTRIBUTING.md) explains what information helps.
 
-## Validate
-
-Run from the repository root with Python 3.10+:
-
-```sh
-python skills/reverse-engineering-investigator/scripts/validate_package.py skills/reverse-engineering-investigator
-python skills/reverse-engineering-investigator/scripts/test_state.py
-python skills/reverse-engineering-investigator/scripts/test_hosts.py
-```
-
-Release checks: 39 state tests, 20 portability tests (17 host/scope layouts), and three fresh-agent source/state continuation cases passed. Installed-product discovery, automatic compaction and native session lifecycle were not run on the named hosts. See [validation results](skills/reverse-engineering-investigator/VALIDATION-RESULTS.md) and [cross-host evaluation](skills/reverse-engineering-investigator/evals/cross-host-tests.md).
-
-See [PUBLISHING.md](PUBLISHING.md) for uploading these source files to your GitHub repository.
+If T-REX helps your work, star the repository so you can find it again and others can discover it.
 
 ## License
 
-Copyright (c) 2026 xxmisaoxx.
+Copyright (c) 2026 xxmisaoxx. [GNU GPL version 3 only](LICENSE) (`GPL-3.0-only`).
 
-T-REX is licensed under the GNU General Public License, version 3 only
-(`GPL-3.0-only`). See [LICENSE](LICENSE) for the complete terms.
-
-You may use, modify and redistribute this project, including commercially,
-under those terms. When conveying covered modified works, preserve the
-required notices and provide the corresponding source under GPLv3.
-
-This project is distributed without any warranty; without even the implied
-warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
+Commercial use is allowed under the license terms. Redistribution of covered modified works must meet GPLv3's source and notice requirements. The project comes without warranty.
