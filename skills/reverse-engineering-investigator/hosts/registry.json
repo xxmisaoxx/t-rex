@@ -1,0 +1,109 @@
+{
+  "registry_version": "1.0",
+  "release_version": "3.1",
+  "verified_on": "2026-10-07",
+  "skill_name": "reverse-engineering-investigator",
+  "hosts": {
+    "opencode": {
+      "label": "OpenCode",
+      "project": ".opencode/skills",
+      "user": ".config/opencode/skills",
+      "guide": "opencode.md",
+      "sources": [
+        "https://opencode.ai/docs/skills/"
+      ],
+      "invocation": "Ask OpenCode to use reverse-engineering-investigator; its native skill tool loads the named skill. Verify it appears in the available-skill list. Do not assume a slash command with the skill name exists.",
+      "notes": "OpenCode also discovers .agents/skills and Claude-compatible locations. Use one visible copy. Compaction, session resume and tool configuration remain OpenCode operations; use the installed version's exposed controls."
+    },
+    "claude-code": {
+      "label": "Claude Code",
+      "project": ".claude/skills",
+      "user": ".claude/skills",
+      "guide": "claude-code.md",
+      "sources": [
+        "https://code.claude.com/docs/en/skills"
+      ],
+      "invocation": "Use /reverse-engineering-investigator with the task, or ask Claude to use the skill. Verify that the command/skill is discovered in this workspace.",
+      "notes": "The project layout and personal layout differ in cloud availability: local personal skills are not automatically read by Claude Code cloud sessions. For a cloned project, include the project skill. Keep frontmatter portable; this package adds no allowed-tools policy, dynamic shell injection, hooks or context: fork requirement."
+    },
+    "codex": {
+      "label": "Codex CLI / IDE",
+      "project": ".agents/skills",
+      "user": ".agents/skills",
+      "guide": "codex.md",
+      "sources": [
+        "https://learn.chatgpt.com/docs/build-skills"
+      ],
+      "invocation": "Mention $reverse-engineering-investigator or select it through /skills in supported Codex CLI/IDE surfaces. Verify discovery in the current workspace.",
+      "notes": "These are external local Codex skill paths. ChatGPT's managed personal-skill installation is a separate distribution mechanism. Keep repository policies in their existing instruction mechanism; the exporter does not overwrite AGENTS.md. Do not infer available tool names, compaction APIs or background-job persistence from the Codex brand."
+    },
+    "cursor": {
+      "label": "Cursor",
+      "project": ".cursor/skills",
+      "user": ".cursor/skills",
+      "guide": "cursor.md",
+      "sources": [
+        "https://cursor.com/help/customization/skills"
+      ],
+      "invocation": "Use /reverse-engineering-investigator or attach the skill with @ in Agent chat on a supporting version. Verify it is listed and the Agent reads SKILL.md.",
+      "notes": "Cursor also discovers shared .agents/skills and compatibility directories. Prefer one copy. User skills and remote/cloud workers have different availability; include project skills in a shared workspace or use Cursor's documented sync controls when desired. This package does not generate always-applied rules or modify those controls."
+    },
+    "antigravity": {
+      "label": "Antigravity 2.0 / IDE",
+      "project": ".agents/skills",
+      "user": ".gemini/config/skills",
+      "guide": "antigravity.md",
+      "sources": [
+        "https://antigravity.google/docs/skills"
+      ],
+      "invocation": "Ask Antigravity to use reverse-engineering-investigator; inspect active skills in the IDE Customizations menu. Antigravity 2.0 documents /reverse-engineering-investigator for manual invocation; verify the installed surface supports it.",
+      "notes": "Current documentation defaults to .agents/skills and keeps .agent/skills compatibility. Use the current layout for new installs. The 2.0 and standalone IDE global location is .gemini/config/skills; CLI uses a different global location. Do not turn skill instructions into legacy workflows or assume IDE tools exist in CLI."
+    },
+    "antigravity-cli": {
+      "label": "Antigravity CLI",
+      "project": ".agents/skills",
+      "user": ".gemini/antigravity-cli/skills",
+      "guide": "antigravity-cli.md",
+      "sources": [
+        "https://antigravity.google/docs/skills"
+      ],
+      "invocation": "Use /reverse-engineering-investigator in the interactive CLI TUI after verifying skill discovery. The documentation describes conversion of skills into slash commands.",
+      "notes": "CLI and IDE share the project skill layout but have different global locations and runtime capabilities. A skill export is not an Antigravity plugin installation. Keep existing plugin, permission and model configuration under host control."
+    },
+    "pi": {
+      "label": "Pi",
+      "project": ".agents/skills",
+      "user": ".agents/skills",
+      "guide": "pi.md",
+      "sources": [
+        "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md"
+      ],
+      "invocation": "Use /skill:reverse-engineering-investigator followed by the task. Inspect startup diagnostics; /reload refreshes skills after editing in an active session.",
+      "notes": "This adapter uses Pi's documented shared Agent Skills locations. Preserve the directory form and relative supporting files. Name collisions keep the first discovered skill, so remove duplicate visible versions. Subagents/extensions are optional host capabilities, not prerequisites of this skill."
+    },
+    "shared": {
+      "label": "Shared Agent Skills",
+      "project": ".agents/skills",
+      "user": ".agents/skills",
+      "guide": "generic.md",
+      "sources": [
+        "https://opencode.ai/docs/skills/",
+        "https://learn.chatgpt.com/docs/build-skills",
+        "https://cursor.com/help/customization/skills",
+        "https://antigravity.google/docs/skills",
+        "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md"
+      ],
+      "invocation": "Use the installed host's skill invocation; verify its discovery path.",
+      "notes": "Suitable for documented shared-layout hosts; use Claude Code's native export separately."
+    },
+    "generic": {
+      "label": "Generic explicit loader",
+      "project": "skills",
+      "user": null,
+      "guide": "generic.md",
+      "sources": [],
+      "invocation": "Explicitly read skills/reverse-engineering-investigator/SKILL.md before the task.",
+      "notes": "No automatic discovery claim is made for an unfamiliar host."
+    }
+  }
+}
