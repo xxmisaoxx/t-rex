@@ -1,0 +1,38 @@
+name: Validate skill
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - ".github/workflows/validate.yml"
+  pull_request:
+    paths:
+      - "skills/**"
+      - ".github/workflows/validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12"]
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Check package integrity
+        run: python skills/reverse-engineering-investigator/scripts/validate_package.py skills/reverse-engineering-investigator
+      - name: Check investigation state
+        run: python skills/reverse-engineering-investigator/scripts/test_state.py
+      - name: Check host packaging
+        run: python skills/reverse-engineering-investigator/scripts/test_hosts.py
