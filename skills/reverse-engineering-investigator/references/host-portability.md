@@ -1,0 +1,25 @@
+# Coding-agent portability
+
+## Runtime contract
+The core owns RE methodology; the project owns investigation state; the host owns tool APIs, permissions, sessions, compaction and jobs. A host adapter describes discovery and invocation only. It neither grants tools nor overrides project instructions or user scope. Analysis providers such as debuggers and decompilers are a separate axis from the coding agent running this workflow.
+
+Resolve SKILL.md links and helper paths from the installed skill directory. Resolve artifact, map and payload paths from the investigation directory containing INVESTIGATION.json, never from the skill directory or a changed shell working directory. Prefer project-relative paths for portable workspaces. If a copied workspace uses absolute paths, rebind only the storage paths after identity verification; retain revision IDs, evidence IDs and provenance. Do not rebind a claim to different bytes.
+
+Use exposed host information first. When NEXT requires a capability, establish only what matters: readable files, byte-preserving reads, command/tool execution, output limits, timeouts, debugger/process availability, or model headroom. Unknown means unknown. An advertised host feature may be disabled, absent on a remote worker, or unavailable through this session's API. Do not scan every integration or load every host adapter at startup.
+
+Map probe semantics to available tools: a bounded raw read can use a file API or command; a disassembly query can use a configured analysis provider or local tool; unavailable attachment can be replaced by another discriminator. Python helpers are optional. Without Python, follow the same schema and state invariants through available editing tools. Preserve exact bytes through binary reads or hex; a lossy text reader cannot establish byte identity. Sequential execution remains valid when subagents or parallel tool calls are unavailable. Use delegation when available and useful, giving each worker bounded questions and independently reconciling evidence.
+
+## Handoff and recovery
+1. Checkpoint material findings and exact NEXT; persist referenced maps/payloads first. If a writer is still running, resolve its ownership before concurrent writes.
+2. Open the same investigation workspace in the destination host. Read CURRENT-STATE as a pointer, then canonical active question, evidence/dependencies, revision and probe slices. Verify relevant artifact identity and byte locations before relying on them; changed bytes require a new revision and dependency invalidation.
+3. Preserve stable IDs, completed probe outcomes, classifications and limitations. A host switch alone does not invalidate artifact facts or restart discovery.
+4. Clear old capacity/usage and projected-operation estimates; mark telemetry noncurrent. Use `scripts/re_state.py reset-context INVESTIGATION.json --expected-revision <n>` when Python is available, or make the equivalent validated checkpoint. Use new exposed measurements, including large contexts; do not infer capacity from an agent brand or hardcode a compaction threshold.
+5. Reconcile outstanding jobs against the issuing host and current process/workspace. A session ID, PID, tool database, debugger attachment or background handle is not a portable job. Check saved outputs before rerunning; log recovered partial coverage and select a viable continuation. Do not assume a host session export contains every referenced artifact.
+6. Execute NEXT with available capabilities. If its original provider is unavailable, preserve the question and discriminator while choosing a new recipe/fallback. Record the changed recipe; do not pretend the original command ran.
+
+The host may compact automatically. Checkpoint independently at material changes and before expected pressure. Invoke manual compaction/resume only through a verified capability of this installed host; never pass slash commands to a shell. After a switch or compaction, recompute actual telemetry or proceed with bounded output when unknown. CURRENT-STATE and EVIDENCE-LEDGER remain generated views, not additional sources of truth. No mandatory HOST-STATE, duplicated handoff ledger, hooks or settings edits are required.
+
+## Installation and unfamiliar agents
+Use [registry.json](../hosts/registry.json) and the matching adapter for documented layouts. Run `scripts/export_host.py --help` for staging exports. Keep one version of the named skill visible to a host; compatible discovery paths can otherwise surface duplicate versions. For hosts without native skills, read the staged generic SKILL.md explicitly or add its thin pointer to an instruction file the host actually supports. Use the generated LOADER.fragment.md as text to merge intentionally; it does not automatically execute or discover anything.
+
+The same core can be used by any agent able to read its instructions and relevant project artifacts. Native skill discovery is version-dependent; successful packaging does not prove an installed product has loaded or followed it. Use [cross-host evals](../evals/cross-host-tests.md) to distinguish package, behavioral and actual-host results.
