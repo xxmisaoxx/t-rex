@@ -1,0 +1,24 @@
+{
+  "schema_version": "3.0",
+  "checkpoint_revision": 0,
+  "objective": "",
+  "artifacts": [],
+  "active_artifact_ids": [],
+  "profiles": [],
+  "questions": [],
+  "hypotheses": [],
+  "evidence": [],
+  "maps": [],
+  "probes": [],
+  "next_probe": null,
+  "context": {
+    "capacity_tokens": null,
+    "used_tokens": null,
+    "next_cost_tokens": null,
+    "future_reserve_tokens": null,
+    "margin_tokens": null,
+    "telemetry_current": false,
+    "durable": false
+  },
+  "workflow_notes": []
+}
