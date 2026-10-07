@@ -1,0 +1,708 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "3.0"
+    },
+    "checkpoint_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "objective": {
+      "type": "string"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "minItems": 0
+    },
+    "active_artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9-]*$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "android",
+          "dotnet",
+          "ios",
+          "javascript-electron",
+          "jvm",
+          "linux-elf",
+          "macos-macho",
+          "native-generic",
+          "python-packaged",
+          "webassembly",
+          "windows-pe"
+        ]
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/question"
+      },
+      "minItems": 0
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hypothesis"
+      },
+      "minItems": 0
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidence"
+      },
+      "minItems": 0
+    },
+    "maps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/map"
+      },
+      "minItems": 0
+    },
+    "probes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/probe"
+      },
+      "minItems": 0
+    },
+    "next_probe": {
+      "$ref": "#/$defs/next_probe"
+    },
+    "context": {
+      "$ref": "#/$defs/context"
+    },
+    "workflow_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schema_version",
+    "checkpoint_revision",
+    "objective",
+    "artifacts",
+    "active_artifact_ids",
+    "profiles",
+    "questions",
+    "hypotheses",
+    "evidence",
+    "maps",
+    "probes",
+    "next_probe",
+    "context",
+    "workflow_notes"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reverse Engineering Investigator 3.0",
+  "$defs": {
+    "span": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": [
+            "raw",
+            "rva",
+            "elf-va",
+            "macho-vm",
+            "runtime-va",
+            "member-offset"
+          ]
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "domain",
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "recipe": {
+      "type": "object",
+      "properties": {
+        "capability": {
+          "type": "string"
+        },
+        "provider": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operation": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "output_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "capability",
+        "provider",
+        "operation",
+        "parameters",
+        "output_path"
+      ],
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "format": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "string"
+        },
+        "parent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "change": {
+          "type": "string",
+          "enum": [
+            "initial",
+            "patch",
+            "replacement",
+            "rebuild",
+            "extraction"
+          ]
+        },
+        "changed_ranges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/span"
+          },
+          "minItems": 0
+        },
+        "mapping_changed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "sha256",
+        "size",
+        "format",
+        "architecture",
+        "parent_id",
+        "change",
+        "changed_ranges",
+        "mapping_changed"
+      ],
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": [
+            "raw",
+            "rva",
+            "elf-va",
+            "macho-vm",
+            "runtime-va",
+            "method-token",
+            "bytecode-offset",
+            "member",
+            "source",
+            "wasm-function",
+            "metadata",
+            "none"
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "member": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "domain",
+        "value",
+        "member"
+      ],
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        },
+        "observation_boundary": {
+          "type": "string"
+        },
+        "module_mappings": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "inputs",
+        "environment",
+        "observation_boundary",
+        "module_mappings"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "class": {
+          "type": "string",
+          "enum": [
+            "OBSERVED",
+            "DERIVED",
+            "INFERRED"
+          ]
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+          ]
+        },
+        "validity": {
+          "type": "string",
+          "enum": [
+            "current",
+            "stale",
+            "historical",
+            "disputed"
+          ]
+        },
+        "location": {
+          "$ref": "#/$defs/location"
+        },
+        "coverage": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "partial",
+            "failed",
+            "unknown"
+          ]
+        },
+        "search_boundary": {
+          "type": "string"
+        },
+        "limits": {
+          "type": "string"
+        },
+        "recipe": {
+          "$ref": "#/$defs/recipe"
+        },
+        "runtime": {
+          "$ref": "#/$defs/runtime"
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "class",
+        "claim",
+        "artifact_ids",
+        "dependencies",
+        "confidence",
+        "validity",
+        "location",
+        "coverage",
+        "search_boundary",
+        "limits",
+        "recipe",
+        "runtime",
+        "supersedes"
+      ],
+      "additionalProperties": false
+    },
+    "question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "text": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ANSWERED",
+            "PARTIAL",
+            "UNRESOLVED",
+            "BLOCKED"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "hypothesis": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "question_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "text": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "SUPPORTED",
+            "REJECTED",
+            "UNTESTED"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "question_id",
+        "text",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "probe": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "question_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capability": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "partial",
+            "failed"
+          ]
+        },
+        "novelty": {
+          "type": "string",
+          "enum": [
+            "new",
+            "none",
+            "unknown"
+          ]
+        },
+        "retry_condition": {
+          "type": "string"
+        },
+        "recipe": {
+          "$ref": "#/$defs/recipe"
+        }
+      },
+      "required": [
+        "id",
+        "question_id",
+        "artifact_ids",
+        "signature",
+        "capability",
+        "scope",
+        "outcome",
+        "novelty",
+        "retry_condition",
+        "recipe"
+      ],
+      "additionalProperties": false
+    },
+    "next_probe": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "question_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "capability": {
+          "type": "string"
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "discriminator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fallback": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "artifact_ids",
+        "capability",
+        "operation",
+        "parameters",
+        "scope",
+        "discriminator",
+        "fallback"
+      ],
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "capacity_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "used_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "next_cost_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "future_reserve_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "margin_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "telemetry_current": {
+          "type": "boolean"
+        },
+        "durable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "capacity_tokens",
+        "used_tokens",
+        "next_cost_tokens",
+        "future_reserve_tokens",
+        "margin_tokens",
+        "telemetry_current",
+        "durable"
+      ],
+      "additionalProperties": false
+    },
+    "map": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9-]*$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "path",
+        "artifact_id",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
