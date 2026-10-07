@@ -1,0 +1,110 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "3.0"
+    },
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9-]*$"
+    },
+    "image_base": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]+$"
+    },
+    "file_size": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "rva": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "virtual_size": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "raw_offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "raw_size": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "name",
+          "rva",
+          "virtual_size",
+          "raw_offset",
+          "raw_size"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9-]*$"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "name",
+          "domain",
+          "value",
+          "evidence_ids"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9-]*$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "image_base",
+    "file_size",
+    "sections",
+    "locations",
+    "evidence_ids"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
