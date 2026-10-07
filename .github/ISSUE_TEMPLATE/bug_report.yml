@@ -1,0 +1,38 @@
+name: Report a problem
+description: Help reproduce an installation, state or investigation problem.
+title: "[Bug] "
+body:
+  - type: input
+    id: host
+    attributes:
+      label: Agent and version
+      placeholder: "Claude Code / Codex / OpenCode / Cursor / Antigravity / Pi"
+    validations:
+      required: true
+  - type: input
+    id: installation
+    attributes:
+      label: Installation method and skill version
+      placeholder: "Skills CLI, manual copy, or exporter; version 3.1"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps and a small reproducer
+      description: Include the target format and relevant tools. Remove private data and credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and relevant evidence
+      description: Include a short trace, error or checkpoint excerpt when available.
+    validations:
+      required: true
