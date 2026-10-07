@@ -1,0 +1,29 @@
+name: Share an investigation
+description: Show a reproducible use of T-REX or a workflow improvement.
+title: "[Showcase] "
+body:
+  - type: input
+    id: setup
+    attributes:
+      label: Agent, skill version and analysis tools
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: What question did you investigate?
+      description: Describe the target format. Use a public fixture or a sanitized example.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Method, findings and supporting evidence
+      description: Link reproducible steps or relevant snippets; label simulations and inferred conclusions.
+    validations:
+      required: true
+  - type: textarea
+    id: experience
+    attributes:
+      label: What helped, what failed and what remains unresolved?
+      description: If you report time or token savings, include the baseline and measurement method.
