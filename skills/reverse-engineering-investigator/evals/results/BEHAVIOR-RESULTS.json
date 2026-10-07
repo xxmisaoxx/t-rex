@@ -1,0 +1,230 @@
+{
+  "date": "2026-10-07",
+  "evaluator": "primary agent; qualitative comparison of full response/action traces to withheld action/claim rubrics",
+  "model": "inherited session model; exact identifier not exposed",
+  "host": "Work agent environment; not OpenCode",
+  "ground_truth_hidden_from_solvers": true,
+  "instruction_version": "v3 development instruction tree; final release checks separately recorded",
+  "results": [
+    {
+      "id": "S01",
+      "scenario": "Windows PE x64",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Computed raw 0x500; refused extrapolated raw 0x700 for virtual tail; traces actual RDX load/writers and distinguishes pointer storage.",
+      "response_path": "traces/v3-S01-S05.md",
+      "response_sha256": "b0e89fe6760558256b6d3fb29e51503a5707f0116f9c92d996ec6e89cc9adcdb",
+      "fixture_sha256": "3a55fb90e84c011471c7c63711cb23295f6ba5c257afc0cad3a9b4a18e6ba346",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S02",
+      "scenario": "Linux ELF",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Computed ELF VA 0x2180 and raw 0x1180 using PT_LOAD/load bias without requiring sections.",
+      "response_path": "traces/v3-S01-S05.md",
+      "response_sha256": "b0e89fe6760558256b6d3fb29e51503a5707f0116f9c92d996ec6e89cc9adcdb",
+      "fixture_sha256": "9fd5718f455b74ffba27609977d303c036bdccfb41acefd2f8ff176b28ae1d09",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S03",
+      "scenario": ".NET",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Kept hashes/MVID/token identities distinct; proposed ImplMap/ModuleRef alias and actual native resolution/marshaling.",
+      "response_path": "traces/v3-S01-S05.md",
+      "response_sha256": "b0e89fe6760558256b6d3fb29e51503a5707f0116f9c92d996ec6e89cc9adcdb",
+      "fixture_sha256": "1f9b73c5d92a7982fe68cdcd40a32d4ac01fce3a16450f830326c9f7339ca531",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S04",
+      "scenario": "Electron plus addon",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Proposed renderer/preload/IPC registration\u2192require resolution\u2192addon initializer/export callback; matching names insufficient.",
+      "response_path": "traces/v3-S01-S05.md",
+      "response_sha256": "b0e89fe6760558256b6d3fb29e51503a5707f0116f9c92d996ec6e89cc9adcdb",
+      "fixture_sha256": "8b429ddf8ae56654bd1aa26d6f136d2a2bc423fe743eaa666306700434a88515",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S05",
+      "scenario": "Android plus JNI",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Selected declaring DEX/ABI and complete overload descriptor; RegisterNatives pointer route remains viable without Java_ export.",
+      "response_path": "traces/v3-S01-S05.md",
+      "response_sha256": "b0e89fe6760558256b6d3fb29e51503a5707f0116f9c92d996ec6e89cc9adcdb",
+      "fixture_sha256": "b80c6b76805489d0e16f31be123adfbda8888a63bcd6ad7d79cad25c21c4fa1c",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S06",
+      "scenario": "Packaged Python plus extension",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Separated PYZ/version-matched bytecode from codec.pyd registration and Nuitka compiled native representation.",
+      "response_path": "traces/v3-S06-S10.md",
+      "response_sha256": "9d2b4f35ba7a21abddf77d124ff2d0a79863229951a600a094f063d2b7a341b3",
+      "fixture_sha256": "ee06cbc0279ad5c0efd0efc33aa022695e8d554138d4aab1b5d45ecba525beee",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S07",
+      "scenario": "Artifact replaced",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Same path/size rejected as identity; preserved R1 history, planned R2-bound remapping and cleared obsolete NEXT.",
+      "response_path": "traces/v3-S06-S10.md",
+      "response_sha256": "9d2b4f35ba7a21abddf77d124ff2d0a79863229951a600a094f063d2b7a341b3",
+      "fixture_sha256": "6b1dfcf97435d9bb52f667fe2225f683ed0fa4b7c05e5d7414c5fff51e93ff55",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S08",
+      "scenario": "Artifact patched",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Called out caller/global negative dependency impact beyond patched span; scoped unaffected module reuse to independence.",
+      "response_path": "traces/v3-S06-S10.md",
+      "response_sha256": "9d2b4f35ba7a21abddf77d124ff2d0a79863229951a600a094f063d2b7a341b3",
+      "fixture_sha256": "729853c573935decca390a38700f79a6ddcf7cf8d3e809bc87cb9769aad74d54",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S09",
+      "scenario": "Stale disassembly",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Kept decode reports separately; chose exact current bytes, mapping, boundary and mode as discriminators.",
+      "response_path": "traces/v3-S06-S10.md",
+      "response_sha256": "9d2b4f35ba7a21abddf77d124ff2d0a79863229951a600a094f063d2b7a341b3",
+      "fixture_sha256": "4a4c9ec7c01a905dfaacafc4404130957ecf9d19177f3e0f5d9c4d02fd53896c",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S10",
+      "scenario": "No direct callers",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Bounded direct CALL absence; narrowed indirect investigation to registration slot/dispatch and feasibility/run boundary.",
+      "response_path": "traces/v3-S06-S10.md",
+      "response_sha256": "9d2b4f35ba7a21abddf77d124ff2d0a79863229951a600a094f063d2b7a341b3",
+      "fixture_sha256": "edd7e9c5b2b8709707219bc067cbc831866c7ef67f83601a77145b8b5c4819f5",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S11",
+      "scenario": "Runtime initialization",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Initialization remained unresolved; TLS presence a pivot, not proof; planned alias destination trace and early write watch.",
+      "response_path": "traces/v3-S11-S15.md",
+      "response_sha256": "88dbd2b61a4ce63ef5e40483da075e015d4d6ce715ef51e11cd6777f511fdb4e",
+      "fixture_sha256": "19695880c6cb026ea6c84eabfe130c6a5b514add5619c326d0fd39181816b2f8",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S12",
+      "scenario": "Tool hang",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "No third unchanged timeout retry; salvaged partial reports and switched to bounded bytes/disassembly/CFG.",
+      "response_path": "traces/v3-S11-S15.md",
+      "response_sha256": "88dbd2b61a4ce63ef5e40483da075e015d4d6ce715ef51e11cd6777f511fdb4e",
+      "fixture_sha256": "7538ed0ef660841ebc1010a997e03bffc96e9fe3e8ae53e7aaf5c3a8465b670a",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S13",
+      "scenario": "Provider disagreement",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Wrong mode report unsupported; correct provider still requires boundary evidence; no quorum/automatic third provider.",
+      "response_path": "traces/v3-S11-S15.md",
+      "response_sha256": "88dbd2b61a4ce63ef5e40483da075e015d4d6ce715ef51e11cd6777f511fdb4e",
+      "fixture_sha256": "445f805082c6e1eeae62cfc6718544bfe897d1683dbfe87d5018ff5dcaa416e2",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S14",
+      "scenario": "Resume after compact",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Recovered checkpoint/Q3 and prescribed RVA0x2200 store trace; did not invent opcode or restart discovery.",
+      "response_path": "traces/v3-S11-S15.md",
+      "response_sha256": "88dbd2b61a4ce63ef5e40483da075e015d4d6ce715ef51e11cd6777f511fdb4e",
+      "fixture_sha256": "b0636c1fbac16e849c473ef93ecca22f4be2d655f71cbb80cecd6f2e7e45fd04",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S15",
+      "scenario": "Prompt re-pasted",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Re-pasted broad task treated as continuation; Q4 binding-table range comes from saved NEXT, not rediscovery.",
+      "response_path": "traces/v3-S11-S15.md",
+      "response_sha256": "88dbd2b61a4ce63ef5e40483da075e015d4d6ce715ef51e11cd6777f511fdb4e",
+      "fixture_sha256": "aacdb59d1dccad676d2e3d06a4796c6ad8536f7f965df4e6d19a7b6ca4f57538",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S16",
+      "scenario": "Model switch",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Invalidated old capacity telemetry; new64k usage/headroom UNKNOWN; retained IDs/revisions and bounded NEXT.",
+      "response_path": "traces/v3-S16-S20.md",
+      "response_sha256": "0d7a73913d129c93c5253b6973a5a686cc6adcad08e5ebbffb62709fd71c6362",
+      "fixture_sha256": "e692efc814bd41bc11d8bb4afdb644581e23db2ff77104e6ee85b391f776cd5b",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S17",
+      "scenario": "1M with substantial headroom",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Calculated headroom220k versus57k requirement, slack163k; continued without ratio trigger.",
+      "response_path": "traces/v3-S16-S20.md",
+      "response_sha256": "0d7a73913d129c93c5253b6973a5a686cc6adcad08e5ebbffb62709fd71c6362",
+      "fixture_sha256": "400c68332ea38bc72e2f800b11b40e61993642a3983362126be7827b41e83304",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S18",
+      "scenario": "Small window near limit",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Checkpoint first; headroom2k versus6k, even zero next output cannot fit fixed reserves; no fictitious compaction API.",
+      "response_path": "traces/v3-S16-S20.md",
+      "response_sha256": "0d7a73913d129c93c5253b6973a5a686cc6adcad08e5ebbffb62709fd71c6362",
+      "fixture_sha256": "b54c5ef5448405217f0c74ba7f8de3160cf62c2c86f2ce936e83a803d0d6d9e0",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S19",
+      "scenario": "Overnight low novelty",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Recorded Q1 no novelty and moved to viable Q2 table probe; no task-wide premature stop or unchanged retries.",
+      "response_path": "traces/v3-S16-S20.md",
+      "response_sha256": "0d7a73913d129c93c5253b6973a5a686cc6adcad08e5ebbffb62709fd71c6362",
+      "fixture_sha256": "8c9f88008b4055d13eae0ce5746ad8fe65a5555f2d7fe85db936c0b933be0466",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    },
+    {
+      "id": "S20",
+      "scenario": "Multiple profiles",
+      "level": "blind-agent-decision-rehearsal",
+      "result": "PASS",
+      "observed_behavior": "Composed Android/JS/WASM/ELF along established bindings, no inferred call order from co-packaging, separate namespaces.",
+      "response_path": "traces/v3-S16-S20.md",
+      "response_sha256": "0d7a73913d129c93c5253b6973a5a686cc6adcad08e5ebbffb62709fd71c6362",
+      "fixture_sha256": "ed56f291efcd11cac69d23c96954b1fece6c412b347a1a3ae87bfda49a20d419",
+      "limitations": "Synthetic metadata; target binaries, runtime tools and OpenCode lifecycle not executed."
+    }
+  ]
+}
