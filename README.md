@@ -1,4 +1,4 @@
-![T-REX — Trace-driven Reverse Engineering eXplorer](assets/t-rex-banner.png)
+![T-REX — Trace-driven Reverse Engineering eXplorer](assets/t-rex-banner.svg)
 
 # T-REX
 
