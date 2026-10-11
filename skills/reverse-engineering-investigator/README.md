@@ -1,4 +1,4 @@
-# Reverse Engineering Investigator v3.2
+# Reverse Engineering Investigator v3.3
 
 One reverse-engineering core for OpenCode, Claude Code, Codex, Cursor, Antigravity, Pi and other coding agents. Keep provider-neutral native/managed/mixed-target reasoning, evidence dependencies, exact continuation and adaptive context headroom. Host adapters describe loading and invocation; the investigation remains independent of host chat history. All workflow instructions are in English.
 
@@ -46,7 +46,7 @@ python scripts/re_tools.py analyze "<binary>" --output "<investigation>/analysis
 python scripts/re_tools.py view --analysis "<investigation>/analysis-01" --kind functions --limit 20
 ```
 
-Only Ghidra has a bundled executable adapter in 3.2. Other analysis tools remain available through the host's actual capabilities. The evidence exporter does not automatically write investigation claims or a final report.
+Use the [Rizin/Cutter and MCP guide](references/rizin-mcp.md) for the second native adapter and optional local stdio tools. Run `python scripts/re_tools.py doctor --provider all` to check Ghidra/JDK, Rizin and shallow GUI discovery. The MCP server starts durable jobs, reports status, supports cancellation and serves verified evidence pages; only MCP requires the optional SDK dependencies. Other analysis tools remain available through the host's actual capabilities. The evidence exporter does not automatically write investigation claims or a final report.
 
 ## Validate
 ```sh

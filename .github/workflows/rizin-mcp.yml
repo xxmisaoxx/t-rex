@@ -1,0 +1,55 @@
+name: Rizin and MCP integration
+
+on:
+  push:
+    branches: [main]
+    paths: ["skills/**", "examples/retry-policy/**", ".github/workflows/rizin-mcp.yml"]
+  pull_request:
+    paths: ["skills/**", "examples/retry-policy/**", ".github/workflows/rizin-mcp.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Download and verify official Rizin 0.9.1
+        shell: python
+        run: |
+          import hashlib, os, pathlib, tarfile, urllib.request, zipfile
+          root = pathlib.Path(os.environ['RUNNER_TEMP']) / 'trex-rizin'
+          root.mkdir()
+          if os.name == 'nt':
+              name = 'rizin-windows-shared64-v0.9.1.zip'
+              expected = '45ffa004e26653eaee8d262b8e6eeae09402a7d319c1f20a2ba794bd6af1cc28'
+          else:
+              name = 'rizin-v0.9.1-static-x86_64.tar.xz'
+              expected = '9102249a9f0b6319c5334a2e5cf8d9cc3f2035e1d3def027c41f6a90f647e8cf'
+          archive = root / name
+          urllib.request.urlretrieve('https://github.com/rizinorg/rizin/releases/download/v0.9.1/' + name, archive)
+          with archive.open('rb') as f:
+              assert hashlib.file_digest(f, 'sha256').hexdigest() == expected
+          if os.name == 'nt':
+              with zipfile.ZipFile(archive) as z: z.extractall(root)
+          else:
+              with tarfile.open(archive) as t: t.extractall(root, filter='data')
+          executable = next(p for p in root.rglob('rizin.exe' if os.name == 'nt' else 'rizin') if p.is_file())
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as f:
+              f.write('RIZIN_PATH=' + str(executable) + '\n')
+      - name: Install optional MCP SDK
+        run: python -m pip install -r skills/reverse-engineering-investigator/scripts/requirements-mcp.txt
+      - name: Test real Rizin and MCP stdio
+        run: python skills/reverse-engineering-investigator/scripts/test_rizin_mcp.py -v

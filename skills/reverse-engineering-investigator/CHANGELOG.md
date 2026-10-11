@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3 — 2026-10-11
+- Add direct Rizin analysis, bounded JSONL evidence and verified cached-project queries alongside Ghidra.
+- Detect Cutter, IDA, Binary Ninja, x64dbg and ImHex in bounded local searches, with official install links and explicit unverified edition/API status.
+- Add optional stdio MCP tools backed by the official Python SDK: discovery, background analysis/function jobs, durable status, cancellation and verified evidence paging.
+- Retain raw Rizin responses, target/provider/project/output hashes and mapped instruction-byte checks; report missing decompiler plugins as partial capability coverage.
+- Add real PE/ELF tests, MCP client/server tests and Ubuntu/Windows integration CI. Keep canonical investigation schema 3.0 and existing host layouts.
+
 ## 3.2 — 2026-10-11
 - Add an optional direct Ghidra adapter with doctor, analyze, cached function query and verified paginated evidence view.
 - Bind runs to binary SHA-256, exporter/provider version, private program database fingerprint and exported file hashes.

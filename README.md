@@ -4,7 +4,7 @@
 
 *Follow the evidence. Uncover the logic.*
 
-[![Skill version](https://img.shields.io/badge/skill-v3.2-9bc53d)](skills/reverse-engineering-investigator/CHANGELOG.md)
+[![Skill version](https://img.shields.io/badge/skill-v3.3-9bc53d)](skills/reverse-engineering-investigator/CHANGELOG.md)
 [![Validate skill](https://github.com/xxmisaoxx/t-rex/actions/workflows/validate.yml/badge.svg)](https://github.com/xxmisaoxx/t-rex/actions/workflows/validate.yml)
 [![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-blue)](LICENSE)
 
@@ -77,7 +77,9 @@ python skills/reverse-engineering-investigator/scripts/re_tools.py analyze "<bin
 python skills/reverse-engineering-investigator/scripts/re_tools.py view --analysis "./investigation/analysis-01" --kind functions --limit 20
 ```
 
-Install an official Ghidra release and its required JDK; pass `--ghidra-home` / `--java-home` or set `GHIDRA_HOME` / `JAVA_HOME` if needed. The adapter exports data with target hashes, addresses, xrefs and pseudocode. The agent uses those files to write the report. Read the [provider guide](skills/reverse-engineering-investigator/references/ghidra-provider.md) for installation, cached queries, coverage limits and failure recovery. Ghidra is the first implemented adapter; Cutter/Rizin and Hyperion integrations are planned.
+Install an official Ghidra release and its required JDK; pass `--ghidra-home` / `--java-home` or set `GHIDRA_HOME` / `JAVA_HOME` if needed. The adapter exports data with target hashes, addresses, xrefs and pseudocode. The agent uses those files to write the report. Read the [provider guide](skills/reverse-engineering-investigator/references/ghidra-provider.md) for installation, cached queries, coverage limits and failure recovery.
+
+Prefer Rizin or use Cutter? Add `--provider rizin` and set `RIZIN_PATH` to the CLI executable. `doctor --provider all` checks both providers and common GUI locations. The optional local MCP server exposes analysis jobs, status, cancellation and evidence paging through the same adapters. See [Rizin/Cutter and MCP setup](skills/reverse-engineering-investigator/references/rizin-mcp.md). Standalone Rizin disassembles without a decompiler plugin; pseudocode availability is reported explicitly. Hyperion remains experimental.
 
 ## Tested scope
 
