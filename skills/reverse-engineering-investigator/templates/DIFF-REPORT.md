@@ -1,34 +1,37 @@
-# DIFF REPORT
+# Build comparison: {question}
 
-## ARTIFACT A
--
+{Use applicable sections only. Replace placeholders with retained evidence; remove these instructions.}
 
-## ARTIFACT B
--
+## Short answer
 
-## NORMALIZATION
--
+{Main change, practical meaning and comparison scope. Distinguish layout changes from established semantic changes; state the main limit.}
 
-## STRUCTURAL DIFFERENCES
--
+## Differences and evidence
 
-## CODE / METHOD DIFFERENCES
--
+**Normalization:** {how identities, relocation, address domains and corresponding entities were matched}
 
-## DATA / METADATA DIFFERENCES
--
+### {Important structural, code, data or observed runtime difference}
 
-## RUNTIME DIFFERENCES
--
+**Conclusion:** {precise difference; OBSERVED, DERIVED or INFERRED; canonical E-ID(s)}
 
-## SEMANTIC INTERPRETATION
--
+**A support:** {artifact A revision; retained file/link; exact typed location, lines, bytes or event; recipe/run/item ID}
 
-## LIMITS
--
+**B support:** {artifact B revision; retained file/link; exact typed location, lines, bytes or event; recipe/run/item ID}
 
-## NEXT
--
+**Reasoning and limits:** {comparison procedure, semantic dependencies, coverage and alternatives}
 
-## REVISION / DOMAIN BINDING
-Parent/child revision IDs, typed locations, changed byte ranges, dependent claims to revalidate, recipe references.
+{Repeat for important differences. Link full inventories and traces rather than pasting them. Bound unchanged/absent claims to the compared scope.}
+
+## Investigation files and continuation
+
+**Identities:** {A/B paths, sizes, hashes and revision lineage; maps/normalization domains}
+
+**Checkpoint:** {existing canonical state path/revision; actual validation performed/result; available generated views}
+
+**Artifacts:** {useful existing evidence, maps and recipes, with purpose and precise slices}
+
+**Revalidation:** {changed byte ranges and affected dependent claim IDs; remaining checks}
+
+**Unresolved:** {remaining comparison questions; or none}
+
+**NEXT:** {exact operation and discriminator; or null when the in-scope comparison is answered}
