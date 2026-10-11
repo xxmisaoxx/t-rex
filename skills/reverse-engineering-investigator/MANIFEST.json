@@ -3,8 +3,8 @@
   "version": "3.3",
   "files": {
     "CHANGELOG.md": {
-      "size": 4136,
-      "sha256": "5ef9a9cc40284b20ca4bd8b4db20fa78d934a769b60767b1fd5cd745b1f26d79"
+      "size": 4383,
+      "sha256": "6a9e30e8f4933a83ac54e59fece49b37f1b16a978e0d7a4d39602a78103ebddf"
     },
     "MIGRATION.md": {
       "size": 4027,
@@ -15,8 +15,8 @@
       "sha256": "b000ec4ed1c273d9e4d5fd9c5a01ced113de496d1258a71b1ce1dbc9594ca48a"
     },
     "SKILL.md": {
-      "size": 6864,
-      "sha256": "18dd52ec2862c9767763d72c675e426a0c70c050ed72d1d57d9859b007a261b1"
+      "size": 7132,
+      "sha256": "d87badb131e0c87fb21219efeef8eb8366bff5306373ba531854198ccad02f52"
     },
     "V2.1-CHANGELOG.md": {
       "size": 1399,
@@ -191,8 +191,8 @@
       "sha256": "51fba1279db5f6be45840aa6812aee3b7b33e9c2d94e78c8d793da1c9aebcc79"
     },
     "references/ghidra-provider.md": {
-      "size": 9048,
-      "sha256": "59b4540cc71f20acbd47d5900f7a02fdc9b5ff47db6324c815af53e7f461dc47"
+      "size": 9147,
+      "sha256": "cb3116ec9a65cf22889eb9cde9d7a1b64ffcf73ba968b8248c018b8858c3e26e"
     },
     "references/host-portability.md": {
       "size": 5140,
@@ -214,9 +214,13 @@
       "size": 1176,
       "sha256": "88dcc79fb56610e8b68c13e05828cbfb8b3adcfa4dc661e2f32c1a07f88b3b64"
     },
+    "references/reporting.md": {
+      "size": 3807,
+      "sha256": "380aad32003f3ca8b4e18f58af471735d51502376a3200f2fc66d8b17c516e2d"
+    },
     "references/rizin-mcp.md": {
-      "size": 9040,
-      "sha256": "95de23486b702afde2d28b1d25d087dcca501c57b2460dafd2c3fae892d15685"
+      "size": 9201,
+      "sha256": "2c7936a2349de6b5eeebff8b2ce6e420ad068c7f11e1cc1a21bffbbdd9d0d04d"
     },
     "references/runtime-reconciliation.md": {
       "size": 846,
@@ -295,8 +299,8 @@
       "sha256": "9f51f1de1dbd515adb2c3123b018f162ddfc00520ccaf0e0b27c45f46e7315fd"
     },
     "templates/DIFF-REPORT.md": {
-      "size": 389,
-      "sha256": "c9e663d0e025aaa6f658c5208e6e6c134c42ac03a8612184c505ab2233f3946a"
+      "size": 1679,
+      "sha256": "4a9d722e0e584f929c4c524b49b36d0bcfc2cac5d2cf5ceceb1d762ed9a733b0"
     },
     "templates/EVIDENCE-LEDGER.md": {
       "size": 299,
@@ -309,6 +313,10 @@
     "templates/PE-MAP.json": {
       "size": 153,
       "sha256": "89a8b9e3d0677dc9b0a63766c504712a3f7d701ecc0835d69789018f78447830"
+    },
+    "templates/REPORT.md": {
+      "size": 1756,
+      "sha256": "4032ebcb089469377fa6a6c4302b49e910ad4454cc5e7cb9ef476d8ad94ccd58"
     }
   }
 }

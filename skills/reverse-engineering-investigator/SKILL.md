@@ -33,7 +33,7 @@ Use sufficient source for a source question; establish the source/build relation
 5. Batch durable updates when a finding, strategy or next probe changes; checkpoint before mutation, interruption or context pressure. Avoid rewriting unchanged state.
 6. Execute NEXT while viable work remains. Stop an answered question; continue other in-scope questions. On saturation change the discriminator or pursue another question.
 
-Report meaningful changes, evidence IDs, uncertainty and NEXT. Expand evidence categories when they clarify a substantial conclusion; avoid an empty repeated checklist. Self-check only the assumptions material to that conclusion.
+Report meaningful changes, evidence IDs, uncertainty and NEXT. For a substantive report, use [reporting](references/reporting.md) and [REPORT template](templates/REPORT.md): short answer first, evidence-linked findings second, investigation files and continuation last. Keep detailed payloads in artifacts and cite precise slices. Expand evidence categories when they clarify a substantial conclusion; avoid an empty repeated checklist. Self-check only the assumptions material to that conclusion.
 
 ## Conditional reasoning modules
 - Evidence classification, canonical state and freshness: [evidence-state](references/evidence-state.md).

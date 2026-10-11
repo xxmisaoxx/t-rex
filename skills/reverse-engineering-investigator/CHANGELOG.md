@@ -1,6 +1,7 @@
 # Changelog
 
 ## 3.3 — 2026-10-11
+- Standardize substantive reports as a short answer, evidence-linked findings and investigation files/continuation; add a report template and align build comparisons. Keep canonical state ownership and raw payloads separate from report snapshots.
 - Add direct Rizin analysis, bounded JSONL evidence and verified cached-project queries alongside Ghidra.
 - Detect Cutter, IDA, Binary Ninja, x64dbg and ImHex in bounded local searches, with official install links and explicit unverified edition/API status.
 - Add optional stdio MCP tools backed by the official Python SDK: discovery, background analysis/function jobs, durable status, cancellation and verified evidence paging.
