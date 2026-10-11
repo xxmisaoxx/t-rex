@@ -104,7 +104,7 @@ class ToolTests(unittest.TestCase):
         m = json.loads((output / 'manifest.json').read_text())
         self.assertEqual(result['status'], 'success')
         self.assertEqual(m['artifact']['sha256'], tools.sha256(self.target))
-        self.assertIn(str(self.target), m['command'])
+        self.assertIn(str(self.target.resolve()), m['command'])
         self.assertIn('functions.jsonl', m['files'])
 
     def test_zero_exit_without_export_fails(self):
@@ -189,7 +189,8 @@ class ToolTests(unittest.TestCase):
 
     def test_windows_command_preserves_spaces_and_rejects_expansion(self):
         command = tools.windows_command(['C:/Tools With Spaces/headless.bat', 'a&b', 'two words'])
-        self.assertIn('"a&b"', command[-1])
+        self.assertIsInstance(command, str)
+        self.assertEqual(command, 'cmd.exe /d /s /c ""C:/Tools With Spaces/headless.bat" "a&b" "two words""')
         with self.assertRaises(ValueError):
             tools.windows_command(['C:/%USERNAME%/headless.bat'])
 
@@ -206,7 +207,8 @@ class GhidraIntegrationTests(unittest.TestCase):
     def live(self, target, output, **kw):
         result = tools.analyze(args_for(target, output, ghidra_home=os.environ['GHIDRA_HOME'],
                                        java_home=os.environ.get('JAVA_HOME'), **kw))
-        self.assertIn(result['status'], ('success', 'partial'), result)
+        log = (output / 'headless.log').read_text(errors='replace')[-12000:] if (output / 'headless.log').exists() else ''
+        self.assertIn(result['status'], ('success', 'partial'), str(result) + '\n' + log)
         return result
 
     def test_pe64_bytes_addresses_decompile_and_cached_query(self):

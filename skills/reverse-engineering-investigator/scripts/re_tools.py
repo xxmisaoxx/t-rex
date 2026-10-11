@@ -121,7 +121,9 @@ def windows_command(command):
     # cmd expands percent/exclamation even in quotes. Reject them rather than silently change paths.
     if any(any(c in str(a) for c in '%!^"\r\n') for a in command):
         raise ValueError('Windows launcher arguments cannot contain %, !, ^, quotes or newlines')
-    return ['cmd.exe', '/d', '/s', '/c', '"' + ' '.join('"' + str(a) + '"' for a in command) + '"']
+    # Pass the complete native command line. Popen's list2cmdline would add
+    # backslash escapes to nested quotes, which cmd.exe does not interpret.
+    return 'cmd.exe /d /s /c "' + ' '.join('"' + str(a) + '"' for a in command) + '"'
 
 
 def run_process(command, output, timeout, java_home=None):
@@ -129,7 +131,7 @@ def run_process(command, output, timeout, java_home=None):
     if java_home:
         env['JAVA_HOME'] = str(Path(java_home).resolve())
         env['PATH'] = str(Path(java_home).resolve() / 'bin') + os.pathsep + env.get('PATH', '')
-    command = windows_command(command) if os.name == 'nt' else command
+    command = windows_command(command) if os.name == 'nt' and str(command[0]).lower().endswith(('.bat', '.cmd')) else command
     with (output / 'headless.log').open('wb') as log:
         proc = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT,
                                 stdin=subprocess.DEVNULL, env=env,
