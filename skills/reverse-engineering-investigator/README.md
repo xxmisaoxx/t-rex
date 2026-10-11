@@ -1,4 +1,4 @@
-# Reverse Engineering Investigator v3.1
+# Reverse Engineering Investigator v3.2
 
 One reverse-engineering core for OpenCode, Claude Code, Codex, Cursor, Antigravity, Pi and other coding agents. Keep provider-neutral native/managed/mixed-target reasoning, evidence dependencies, exact continuation and adaptive context headroom. Host adapters describe loading and invocation; the investigation remains independent of host chat history. All workflow instructions are in English.
 
@@ -36,11 +36,24 @@ INVESTIGATION.json owns claims; CURRENT-STATE and EVIDENCE-LEDGER are generated 
 
 The optional dependency-free Python helper manages state mechanics only. It does not establish binary semantics, discover providers or invoke host compaction. No MCP implementation, particular analysis provider, subagents, hooks, fixed context limit or automated host configuration is required.
 
+## Native analysis with Ghidra
+
+Use the optional [Ghidra provider](references/ghidra-provider.md) to discover Ghidra/JDK, run isolated headless analysis and export bounded evidence. Query functions from the saved project without repeating auto-analysis. Python 3.10+ and an official Ghidra installation with a compatible JDK are required for this adapter; no REA or pip dependency is used.
+
+```sh
+python scripts/re_tools.py doctor
+python scripts/re_tools.py analyze "<binary>" --output "<investigation>/analysis-01"
+python scripts/re_tools.py view --analysis "<investigation>/analysis-01" --kind functions --limit 20
+```
+
+Only Ghidra has a bundled executable adapter in 3.2. Other analysis tools remain available through the host's actual capabilities. The evidence exporter does not automatically write investigation claims or a final report.
+
 ## Validate
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python scripts/validate_package.py .
 PYTHONDONTWRITEBYTECODE=1 python scripts/test_state.py
 PYTHONDONTWRITEBYTECODE=1 python scripts/test_hosts.py
+PYTHONDONTWRITEBYTECODE=1 python scripts/test_tools.py
 python scripts/re_state.py validate templates/INVESTIGATION.json
 ```
 

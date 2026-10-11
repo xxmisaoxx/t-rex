@@ -43,6 +43,7 @@ Report meaningful changes, evidence IDs, uncertainty and NEXT. Expand evidence c
 - Rebuilds, patches or version comparisons: [diffing-versioning](references/diffing-versioning.md).
 - Packed/generated/obfuscated representations: [obfuscation-transformations](references/obfuscation-transformations.md).
 - Capability choice, provider conflicts or partial failures: [tool-selection](references/tool-selection.md).
+- Native binary analysis with the bundled Ghidra CLI: [ghidra-provider](references/ghidra-provider.md). Discover Ghidra/JDK, export bounded evidence, then query selected functions from the cached project before repeating analysis.
 - Headroom, compaction or model switch: [context-compaction](references/context-compaction.md).
 - Overnight runs, repeated probes or restarts: [long-run-execution](references/long-run-execution.md).
 
