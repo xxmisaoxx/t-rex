@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ghidra discovery, isolated headless analysis and bounded evidence reads (stdlib only)."""
+"""Native provider discovery, isolated analysis and bounded evidence reads (stdlib only)."""
 import argparse
 import datetime as dt
 import hashlib
@@ -126,7 +126,7 @@ def windows_command(command):
     return 'cmd.exe /d /s /c "' + ' '.join('"' + str(a) + '"' for a in command) + '"'
 
 
-def run_process(command, output, timeout, java_home=None):
+def run_process(command, output, timeout, java_home=None, cancel_event=None):
     env = os.environ.copy()
     if java_home:
         env['JAVA_HOME'] = str(Path(java_home).resolve())
@@ -137,7 +137,17 @@ def run_process(command, output, timeout, java_home=None):
                                 stdin=subprocess.DEVNULL, env=env,
                                 start_new_session=os.name != 'nt')
         try:
-            return proc.wait(timeout=timeout), False
+            deadline = time.monotonic() + timeout
+            while True:
+                if cancel_event and cancel_event.is_set():
+                    raise subprocess.TimeoutExpired(command, timeout)
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise subprocess.TimeoutExpired(command, timeout)
+                try:
+                    return proc.wait(timeout=min(remaining, 0.1)), False
+                except subprocess.TimeoutExpired:
+                    continue
         except (subprocess.TimeoutExpired, KeyboardInterrupt):
             if os.name == 'nt':
                 try:
@@ -218,7 +228,11 @@ def analyze(args, reuse=False):
     write_json(output / 'manifest.json', manifest)
     start = time.monotonic()
     try:
-        code, timed_out = run_process(command, output, args.timeout, args.java_home)
+        event = getattr(args, 'cancel_event', None)
+        if event is None:
+            code, timed_out = run_process(command, output, args.timeout, args.java_home)
+        else:
+            code, timed_out = run_process(command, output, args.timeout, args.java_home, event)
         manifest.update(returncode=code, timed_out=timed_out)
         metadata_path = output / 'metadata.json'
         metadata = json.loads(metadata_path.read_text(encoding='utf-8')) if metadata_path.is_file() else None
@@ -271,6 +285,7 @@ def view(args):
             matches += 1
     coverage = manifest.get('metadata', {}).get('collections', {}).get(args.kind, {})
     return {'run_id': manifest['run_id'], 'artifact': manifest['artifact'], 'kind': args.kind,
+            'analysis_status': manifest.get('status'), 'analysis_error': manifest.get('error'),
             'source': name, 'source_sha256': expected['sha256'], 'collection': coverage,
             'offset': args.offset, 'matches_in_export': matches, 'rows': rows,
             'next_offset': args.offset + len(rows) if args.offset + len(rows) < matches else None}
@@ -283,6 +298,37 @@ def positive(value):
     return number
 
 
+def dispatch(args):
+    provider = getattr(args, 'provider', None) or 'ghidra'
+    if args.action == 'view':
+        if args.offset < 0:
+            raise ValueError('Offset cannot be negative')
+        return view(args)
+    if args.action == 'doctor':
+        if provider in ('rizin', 'all'):
+            from re_rizin import doctor as rizin_doctor, inventory
+            r = rizin_doctor(getattr(args, 'rizin_path', None))
+            if provider == 'rizin':
+                return r
+            return {'providers': [doctor(args.ghidra_home, args.java_home), r],
+                    'interfaces': inventory()}
+        return doctor(args.ghidra_home, args.java_home)
+    if args.action == 'function':
+        if not args.function:
+            raise ValueError('Specify at least one --function name/address')
+        source = json.loads((Path(args.analysis) / 'manifest.json').read_text(encoding='utf-8'))
+        saved = source.get('provider', {}).get('name')
+        if getattr(args, 'provider', None) and provider != saved:
+            raise ValueError('Selected provider does not match saved analysis')
+        provider = saved
+    if provider == 'rizin':
+        from re_rizin import analyze as rizin_analyze
+        return rizin_analyze(args, args.action == 'function')
+    if provider != 'ghidra':
+        raise ValueError('Unknown analysis provider')
+    return analyze(args, args.action == 'function')
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='action', required=True)
@@ -291,6 +337,8 @@ def main(argv=None):
                 sub.add_parser('function', help='Read functions from a saved project without reanalysis')]:
         cmd.add_argument('--ghidra-home')
         cmd.add_argument('--java-home')
+        cmd.add_argument('--provider', choices=('ghidra', 'rizin', 'all') if cmd is d else ('ghidra', 'rizin'))
+        cmd.add_argument('--rizin-path', help='Rizin executable or installation directory')
         if cmd is d:
             continue
         if cmd.prog.endswith(' analyze'):
@@ -316,16 +364,7 @@ def main(argv=None):
     v.add_argument('--limit', type=positive, default=50)
     args = p.parse_args(argv)
     try:
-        if args.action == 'doctor':
-            result = doctor(args.ghidra_home, args.java_home)
-        elif args.action == 'view':
-            if args.offset < 0:
-                raise ValueError('Offset cannot be negative')
-            result = view(args)
-        else:
-            if args.action == 'function' and not args.function:
-                raise ValueError('Specify at least one --function name/address')
-            result = analyze(args, args.action == 'function')
+        result = dispatch(args)
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 1 if result.get('status') in ('failed', 'unavailable') else 0
     except (OSError, ValueError, KeyError, TypeError) as exc:
