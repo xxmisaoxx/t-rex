@@ -38,3 +38,5 @@ jobs:
         run: python skills/reverse-engineering-investigator/scripts/test_hosts.py
       - name: Check analysis adapter control plane
         run: python skills/reverse-engineering-investigator/scripts/test_tools.py
+      - name: Check durable analysis jobs
+        run: python skills/reverse-engineering-investigator/scripts/test_rizin_mcp.py
