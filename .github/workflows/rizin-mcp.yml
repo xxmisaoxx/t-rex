@@ -46,7 +46,7 @@ jobs:
               with zipfile.ZipFile(archive) as z: z.extractall(root)
           else:
               with tarfile.open(archive) as t: t.extractall(root, filter='data')
-          executable = next(root.rglob('rizin.exe' if os.name == 'nt' else 'rizin'))
+          executable = next(p for p in root.rglob('rizin.exe' if os.name == 'nt' else 'rizin') if p.is_file())
           with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as f:
               f.write('RIZIN_PATH=' + str(executable) + '\n')
       - name: Install optional MCP SDK
