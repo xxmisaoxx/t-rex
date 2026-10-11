@@ -243,8 +243,8 @@
       "sha256": "b8d14ddad811d4f6f6ec16ba1eff7b20dfdec485a6bbac77b84bb1b9aa1d645f"
     },
     "scripts/re_tools.py": {
-      "size": 18229,
-      "sha256": "76b3c75639c27dd21e6eb0231165d6e83b3c037959ed8cfcec6deafc1bb160e4"
+      "size": 18422,
+      "sha256": "26554d81d740814176684448379b049f34e048d763d2c211a98b3bb2c44a7048"
     },
     "scripts/schema_check.py": {
       "size": 2824,
@@ -259,8 +259,8 @@
       "sha256": "fe06b5cc3aad2be8e0fcd32350ccdff3f05371ca976883e995b7d5faaf29d1cd"
     },
     "scripts/test_tools.py": {
-      "size": 13815,
-      "sha256": "701aab1eb69ee89168bc98b2bab04e1ed7af171499929a5d720f714bf681d1b0"
+      "size": 14076,
+      "sha256": "82349eea49fc37a442741dbc677e01652cf789e0f1d513a5d13946a6c72067fe"
     },
     "scripts/validate_package.py": {
       "size": 2895,
