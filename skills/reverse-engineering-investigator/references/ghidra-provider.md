@@ -103,21 +103,22 @@ provider. The adapter performs static analysis; it does not execute the target b
 ## Turn data into a report and checkpoint
 
 Read manifest/metadata first, then only inventory pages and details implicated in the user's
-question. Describe format/architecture, relevant functions and value flow, supporting callers,
-strings/symbols, limitations and exact NEXT. Cite the run ID, evidence ID, output file and address
-for substantial findings. Separate observed bytes/tool output from derived semantics and inferred
-intent. Do not make package-wide absence claims from a bounded sample.
+question. Follow [reporting](reporting.md): short answer, evidence-linked findings, then investigation
+files and continuation. Cite canonical E-IDs, the provider run/item ID, retained output file and
+precise address/record for substantial findings. Separate observed bytes/tool output from derived
+semantics and inferred intent. Bound absence claims to the actual search scope.
 
 Save the report's supported claims and probe outcome in canonical investigation state using the
 existing state workflow. Link raw evidence files and their hashes; do not paste the whole bundle
 into `INVESTIGATION.json`. Recover prior state and cached project before starting another analysis
 of unchanged input. These scripts export evidence; they do not automatically write claims or a
-finished report, and there is no bundled MCP server in this version.
+finished report. The optional [local MCP server](rizin-mcp.md) exposes these same adapters;
+the agent still owns report synthesis and canonical state updates.
 
 ## Other providers
 
-The bundled executable adapter currently supports Ghidra only. Treat Cutter/Rizin as the next
-alternative and Hyperion as experimental pending MCP lifecycle/accuracy tests. Use IDA and Binary
+The bundled executable adapters support Ghidra and [Rizin](rizin-mcp.md). Cutter is detected as a
+GUI; automation uses Rizin directly. Treat Hyperion as experimental. Use IDA and Binary
 Ninja according to the installed edition's actual APIs/MCP capability. Use x64dbg for runtime
 questions and ImHex for structured byte/pattern questions. Their adapters are planned; locating an
 application or seeing a tool name does not establish a working integration.
