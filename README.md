@@ -10,9 +10,9 @@
 
 [Install](#quick-start) · [Try an example](examples/retry-policy/README.md) · [Getting started](docs/getting-started.md) · [Validation](skills/reverse-engineering-investigator/VALIDATION-RESULTS.md)
 
-T-REX is a reverse-engineering skill for OpenCode, Claude Code, Codex, Cursor, Antigravity, Pi, and other coding agents. It helps agents trace values and callers, investigate initialization, follow connections between native and managed code, and compare software builds using the analysis tools available in your environment.
+T-REX helps coding agents investigate software and explain what the evidence supports. Trace values, callers and initialization, follow native/managed boundaries, or compare builds—with findings tied to source locations, machine bytes or recorded tool output.
 
-Its focus is keeping an investigation usable across long sessions. Findings retain their supporting evidence, artifact revisions, and unresolved questions. Checkpoints record the exact next step so another session or agent can continue. Adaptive context handling, dependency checks, and tool-failure recovery help the agent avoid repeated work and identify conclusions that need revalidation.
+Reports start with a short answer, then link important conclusions to their evidence. Artifacts, uncertainty and investigation state stay available for verification and continuation across sessions. Works with OpenCode, Claude Code, Codex, Cursor, Antigravity, Pi and other coding agents. [See the report format](skills/reverse-engineering-investigator/templates/REPORT.md).
 
 ## Quick start
 
