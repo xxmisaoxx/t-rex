@@ -21,9 +21,12 @@ python skills/reverse-engineering-investigator/scripts/validate_package.py skill
 python skills/reverse-engineering-investigator/scripts/test_state.py
 python skills/reverse-engineering-investigator/scripts/test_hosts.py
 python skills/reverse-engineering-investigator/scripts/test_tools.py
+python skills/reverse-engineering-investigator/scripts/test_rizin_mcp.py
 ```
 
 For real Ghidra integration tests, set `GHIDRA_HOME` and `JAVA_HOME` to a compatible installation, then run `test_tools.py -v`. Without Ghidra, its three live cases are explicitly skipped. CI also runs real headless integration on Ubuntu and Windows; ELF compiler cases run on Unix only.
+
+For real Rizin and MCP tests, install `scripts/requirements-mcp.txt` in a virtual environment, set `RIZIN_PATH` to the Rizin executable, and run `test_rizin_mcp.py -v`. Without these optional dependencies, their live cases are explicitly skipped. The Rizin/MCP CI matrix uses pinned Rizin archives and the official MCP SDK on Ubuntu and Windows.
 
 If you modify packaged files, refresh their size and SHA-256 entries in `MANIFEST.json` before validation. The manifest excludes itself.
 
