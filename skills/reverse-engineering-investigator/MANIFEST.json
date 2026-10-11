@@ -1,22 +1,22 @@
 {
   "name": "reverse-engineering-investigator",
-  "version": "3.2",
+  "version": "3.3",
   "files": {
     "CHANGELOG.md": {
-      "size": 3363,
-      "sha256": "f23fe849d4d378c51274db6c2c7e190079e6ba10445a2008749e0f722f80a87b"
+      "size": 4136,
+      "sha256": "5ef9a9cc40284b20ca4bd8b4db20fa78d934a769b60767b1fd5cd745b1f26d79"
     },
     "MIGRATION.md": {
       "size": 4027,
       "sha256": "e883cea8170da8c3e33fcb5cf7b38435be90e045851f89cef8bf63e069f5c889"
     },
     "README.md": {
-      "size": 5578,
-      "sha256": "b411373bfa102291654d1ee7f02aef7035848898d79cadb6e9d96af8d2815025"
+      "size": 5917,
+      "sha256": "b000ec4ed1c273d9e4d5fd9c5a01ced113de496d1258a71b1ce1dbc9594ca48a"
     },
     "SKILL.md": {
-      "size": 6659,
-      "sha256": "57e02f65f2f521ae77df6a7b64f50a8c203ce9062c8e62c15b54dc704d94e728"
+      "size": 6864,
+      "sha256": "18dd52ec2862c9767763d72c675e426a0c70c050ed72d1d57d9859b007a261b1"
     },
     "V2.1-CHANGELOG.md": {
       "size": 1399,
@@ -61,6 +61,10 @@
     "evals/results/live-resume-result.md": {
       "size": 2836,
       "sha256": "269cb2e113cda69e66a73662d537e880956fa08dc0ec98cbab9b31a664eea4b1"
+    },
+    "evals/results/rizin-mcp-results.md": {
+      "size": 3083,
+      "sha256": "5c0d396a4215b1a7d973d0841b3da5283faf3f6ad6f405768142fd5ae90a2371"
     },
     "evals/results/v3-S01-S05.md": {
       "size": 14291,
@@ -116,7 +120,7 @@
     },
     "hosts/registry.json": {
       "size": 6461,
-      "sha256": "dab177691dcc12e4c689eb2a8185556aecde8489c470b4f267bbd82462b62b3c"
+      "sha256": "26bb600bb154a25eb360f7aee94893a186c68ee716c4c38b68a343b294f5bef1"
     },
     "profiles/android.md": {
       "size": 1351,
@@ -210,6 +214,10 @@
       "size": 1176,
       "sha256": "88dcc79fb56610e8b68c13e05828cbfb8b3adcfa4dc661e2f32c1a07f88b3b64"
     },
+    "references/rizin-mcp.md": {
+      "size": 9040,
+      "sha256": "95de23486b702afde2d28b1d25d087dcca501c57b2460dafd2c3fae892d15685"
+    },
     "references/runtime-reconciliation.md": {
       "size": 846,
       "sha256": "b6fb50380a9462620c3543dbcfc05ff0cccd6eda47dc279a5cab20f4ca3acc16"
@@ -219,8 +227,8 @@
       "sha256": "e36e6619c77b82462b26852c88bf86cd3bc7e92835eec88efb1bdd50fafe6db7"
     },
     "references/tool-selection.md": {
-      "size": 2375,
-      "sha256": "6447c52f72172b32746cacc451eed1ed705e1eaf007a59a37751479560520f32"
+      "size": 2516,
+      "sha256": "669fd96f09935e8633178eadea3957ff5c3dbba67d916116e5fd147cb10e0693"
     },
     "schemas/investigation.schema.json": {
       "size": 14508,
@@ -238,13 +246,25 @@
       "size": 15166,
       "sha256": "0f75866ee75c3de18d39d04e7ae52427eebf1d5a724e7685543045ebabc0b4da"
     },
+    "scripts/re_mcp.py": {
+      "size": 11809,
+      "sha256": "8dce6e34e46ceb703e95a7e7d1151b1d6e59b29488612879a05dfa95415e1931"
+    },
+    "scripts/re_rizin.py": {
+      "size": 21291,
+      "sha256": "961385423bab60bb0fbf99553dd7f28dd88ef64b398fdc083f97e20fbd65f7ab"
+    },
     "scripts/re_state.py": {
       "size": 13397,
       "sha256": "b8d14ddad811d4f6f6ec16ba1eff7b20dfdec485a6bbac77b84bb1b9aa1d645f"
     },
     "scripts/re_tools.py": {
-      "size": 18422,
-      "sha256": "26554d81d740814176684448379b049f34e048d763d2c211a98b3bb2c44a7048"
+      "size": 20382,
+      "sha256": "92a1b1994c116d4a1c83678e67ff12a2c125d243ac0ba016eaf1eae72781c510"
+    },
+    "scripts/requirements-mcp.txt": {
+      "size": 11,
+      "sha256": "b2a3a41cb92969a57ba10746218731ed453fe6528322ddda667df989ac494035"
     },
     "scripts/schema_check.py": {
       "size": 2824,
@@ -253,6 +273,10 @@
     "scripts/test_hosts.py": {
       "size": 9617,
       "sha256": "70bc67fefcdcef98f874988149d39376417869e9042848645b52e1adee4221c8"
+    },
+    "scripts/test_rizin_mcp.py": {
+      "size": 10764,
+      "sha256": "f10fd7060bfc550ff933a77d6ed89951a5632c902960a3c58e0bc91ff955611f"
     },
     "scripts/test_state.py": {
       "size": 9506,
