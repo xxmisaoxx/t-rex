@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2 — 2026-10-11
+- Add an optional direct Ghidra adapter with doctor, analyze, cached function query and verified paginated evidence view.
+- Bind runs to binary SHA-256, exporter/provider version, private program database fingerprint and exported file hashes.
+- Export bounded JSONL inventories, instruction bytes, entry xrefs and per-function pseudocode with explicit truncation, timeout and missing-selector outcomes.
+- Preserve canonical state schema 3.0 and all host layouts. No REA dependency or bundled MCP server.
+- Add control-plane tests, real PE64/ELF headless tests and an Ubuntu/Windows integration workflow. Actual platform results are recorded separately.
+
 ## 3.1 — 2026-10-07
 - Make coding-agent portability explicit, independently of analysis-provider portability.
 - Add documented loading/invocation adapters for OpenCode, Claude Code, Codex CLI/IDE, Cursor, Antigravity 2.0/IDE, Antigravity CLI and Pi; include shared and generic explicit-loader layouts.

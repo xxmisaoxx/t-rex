@@ -20,7 +20,10 @@ Run from the repository root with Python 3.10+:
 python skills/reverse-engineering-investigator/scripts/validate_package.py skills/reverse-engineering-investigator
 python skills/reverse-engineering-investigator/scripts/test_state.py
 python skills/reverse-engineering-investigator/scripts/test_hosts.py
+python skills/reverse-engineering-investigator/scripts/test_tools.py
 ```
+
+For real Ghidra integration tests, set `GHIDRA_HOME` and `JAVA_HOME` to a compatible installation, then run `test_tools.py -v`. Without Ghidra, its three live cases are explicitly skipped. CI also runs real headless integration on Ubuntu and Windows; ELF compiler cases run on Unix only.
 
 If you modify packaged files, refresh their size and SHA-256 entries in `MANIFEST.json` before validation. The manifest excludes itself.
 

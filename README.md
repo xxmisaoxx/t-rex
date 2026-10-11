@@ -4,7 +4,7 @@
 
 *Follow the evidence. Uncover the logic.*
 
-[![Skill version](https://img.shields.io/badge/skill-v3.1-9bc53d)](skills/reverse-engineering-investigator/CHANGELOG.md)
+[![Skill version](https://img.shields.io/badge/skill-v3.2-9bc53d)](skills/reverse-engineering-investigator/CHANGELOG.md)
 [![Validate skill](https://github.com/xxmisaoxx/t-rex/actions/workflows/validate.yml/badge.svg)](https://github.com/xxmisaoxx/t-rex/actions/workflows/validate.yml)
 [![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-blue)](LICENSE)
 
@@ -65,11 +65,27 @@ Profiles cover PE, ELF, Mach-O, generic native code, .NET, JVM, JavaScript/Elect
 
 The workflow uses the agent's available tools and can work alongside MCP-based analysis systems. The [architecture notes](skills/reverse-engineering-investigator/V3-ARCHITECTURE.md) explain state ownership and evidence dependencies.
 
+## Analyze a binary with Ghidra
+
+T-REX now includes an optional Ghidra adapter. Your agent can check the installation, analyze a native binary, read filtered evidence, and query individual functions from the saved project. No REA dependency is required.
+
+From the repository root:
+
+```sh
+python skills/reverse-engineering-investigator/scripts/re_tools.py doctor
+python skills/reverse-engineering-investigator/scripts/re_tools.py analyze "<binary>" --output "./investigation/analysis-01"
+python skills/reverse-engineering-investigator/scripts/re_tools.py view --analysis "./investigation/analysis-01" --kind functions --limit 20
+```
+
+Install an official Ghidra release and its required JDK; pass `--ghidra-home` / `--java-home` or set `GHIDRA_HOME` / `JAVA_HOME` if needed. The adapter exports data with target hashes, addresses, xrefs and pseudocode. The agent uses those files to write the report. Read the [provider guide](skills/reverse-engineering-investigator/references/ghidra-provider.md) for installation, cached queries, coverage limits and failure recovery. Ghidra is the first implemented adapter; Cutter/Rizin and Hyperion integrations are planned.
+
 ## Tested scope
 
 Release 3.1 passed 39 state tests, 20 portability tests covering 17 host/scope layouts, and three fresh-agent source/state continuation cases. [Read the results and remaining gaps](skills/reverse-engineering-investigator/VALIDATION-RESULTS.md).
 
-These checks cover state mechanics and the tested packaging/continuation cases. Actual discovery, compaction and native session lifecycle on every named host, real binary coverage and multi-hour stability still need evaluation.
+The [Ghidra validation record](skills/reverse-engineering-investigator/evals/results/ghidra-provider-results.md) covers the new adapter separately.
+
+These checks cover state mechanics and the tested packaging/continuation cases. Actual discovery, compaction and native session lifecycle on every named host, broader binary coverage and multi-hour stability still need evaluation.
 
 ## Help improve T-REX
 

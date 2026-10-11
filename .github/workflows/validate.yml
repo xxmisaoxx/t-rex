@@ -36,3 +36,5 @@ jobs:
         run: python skills/reverse-engineering-investigator/scripts/test_state.py
       - name: Check host packaging
         run: python skills/reverse-engineering-investigator/scripts/test_hosts.py
+      - name: Check analysis adapter control plane
+        run: python skills/reverse-engineering-investigator/scripts/test_tools.py
